@@ -27,9 +27,12 @@ def job():
         {"user_id": "26F10DB2C9C7B3F81620EA24559B1E48B42842C745B58C59", "password": "6CBB7E8C5DB81A02C54AE10F0EA876E5"}
     ]
     
+    results = []  # 存储签到结果
     for user in user_info:
         result = sign_in(user["user_id"], user["password"])  # 直接使用密码
-        print(f"{user['user_id']} 签到结果: {result}")
+        results.append(f"{user['user_id']} 签到结果: {result}")
+    
+    return results  # 返回签到结果
 
 # 启动定时任务
 def run_schedule():
@@ -48,6 +51,8 @@ if __name__ == '__main__':
     threading.Thread(target=run_schedule, daemon=True).start()
 
     if st.button("手动签到"):
-        job()  # 直接调用job方法进行手动签到
+        results = job()  # 直接调用job方法进行手动签到
+        for result in results:
+            st.write(result)  # 输出签到结果
 
     st.write("执行完毕，自动退出！")
