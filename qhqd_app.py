@@ -70,8 +70,11 @@ if __name__ == '__main__':
         ]
         
         for user in user_info:
-            encrypted_password = encrypt_password(user["password"], key)
-            result = sign_in(user["user_id"], encrypted_password)
-            st.write(f"{user['user_id']} 签到结果: {result}")
+            if user["user_id"] and user["password"]:  # 检查用户ID和密码是否输入
+                encrypted_password = encrypt_password(user["password"], key)
+                result = sign_in(user["user_id"], encrypted_password)
+                st.write(f"{user['user_id']} 签到结果: {result}")
+            else:
+                st.write("请确保输入用户ID和密码。")  # 提示用户输入信息
 
     st.write("执行完毕，自动退出！")
